@@ -1,18 +1,24 @@
 /* eslint-disable react/jsx-no-duplicate-props */
-import React from "react";
-import {Link} from "react-router-dom";
-import AdminNav from '../../components/nav/AdminNav'
+import React ,{useEffect, useState} from "react";
+import AdminNav from "../../components/nav/AdminNav";
+
 
 const AdminDashboard = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+ 
     return (
         <div className="container-fluid">
-      <div className="row">
-           <div className="col-md-2">
-               <AdminNav />
-           </div>
-        <div className="col">Admin Dashboard</div>
-      </div>
-    </div>
+            <div className="row">
+                <div className="col-md-2">
+                    <AdminNav />
+                </div>
+                 <div className="col">
+                   <h4>Admin Dashboard</h4>
+                    
+                 </div>
+            </div>   
+        </div>
     )
 }
 
