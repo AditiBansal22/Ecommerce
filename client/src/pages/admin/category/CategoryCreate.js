@@ -11,10 +11,10 @@ import LocalSearch from '../../../components/forms/LocalSearch';
 const CategoryCreate = () => {
     const [name, setName] = useState('');
     const [loading, setLoading] = useState(false);
-     const {user} = useSelector((state) => ({...state}));
-     const[categories, setCategories] = useState([]);
+    const {user} = useSelector((state) => ({...state}));
+    const[categories, setCategories] = useState([]);
      //searching/filtering
-     const[keyword,setKeyword] = useState("");
+    const[keyword,setKeyword] = useState("");
 
      useEffect(()=>{
         loadCategories();
