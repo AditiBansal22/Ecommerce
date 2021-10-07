@@ -2,7 +2,7 @@ import React from 'react'
 import {Select} from "antd"
 const {Option} = Select
 
-const ProductUpdateForm = ({handleSubmit,handleChange, handleCatagoryChange,setValues,values,subOptions, showSub,categories}) =>
+const ProductUpdateForm = ({handleSubmit,handleChange, handleCatagoryChange,setValues,values,subOptions, showSub,categories,arrayOfSubsIds,setArrayOfSubsIds, selectedCategory}) =>
 { 
     const {
         title,
@@ -68,26 +68,25 @@ const ProductUpdateForm = ({handleSubmit,handleChange, handleCatagoryChange,setV
                     
                     <div className="form-group">
                         <label>Category</label>
-                        <select name="category" className="form-control" onChange={handleCatagoryChange}>
-                            <option>{category ? category.name : "Please select"}</option>
+                        <select name="category" className="form-control" onChange={handleCatagoryChange} value ={selectedCategory ? selectedCategory : category._id}>
                             {categories.length >0 && categories.map((c) => (<option key={c._id} value={c._id}>{c.name}</option> ))}
                             {JSON.stringify(category)}
                         </select>
                 </div>
 
-                  {showSub && <div>
+                   <div>
                   <label>Sub Category</label>
                   <Select
                     mode="multiple"
                     style={{width:'100%'}}
                     placeholder="Please Select"
-                    value={subs}
-                    onChange={value =>setValues({...values,subs: value})}
+                    value={arrayOfSubsIds}
+                    onChange={(value) => setArrayOfSubsIds(value)}
                   >
-                     {subOptions.length && subOptions.map((s) => <Option key={s._id} value={s._id}>{s.name}</Option>)}
+                   {subOptions.length && subOptions.map((s) => <Option key={s._id} value={s._id}>{s.name}</Option>)}
                   </Select>
                   </div>
-}
+
                     <br/>
                     <button className= "btn btn-outline-info">Save</button>
         </form>

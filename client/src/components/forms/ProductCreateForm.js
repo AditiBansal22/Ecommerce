@@ -86,7 +86,7 @@ const ProductCreateForm = ({handleSubmit,handleChange,handleCatagoryChange, valu
                      {subOptions.length && subOptions.map((s) => <Option key={s._id} value={s._id}>{s.name}</Option>)}
                   </Select>
                   </div>
-}
+                }
                     <br/>
                     <button className= "btn btn-outline-info">Save</button>
         </form>

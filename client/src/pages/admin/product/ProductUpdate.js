@@ -24,13 +24,15 @@ const initialState = {
   };
 
 const ProductUpdate = ({match}) => {
-    const [loading, setLoading] = useState(false);
+    //const [loading, setLoading] = useState(false);
     const {user} = useSelector((state) => ({...state}));
     const {slug} = match.params;
     const [values,setValues] = useState(initialState);
     const [subOptions, setSubOptions] = useState([]);
     const [showSub, setShowSub] = useState(false);
     const [categories, setCategories] = useState([]);
+    const [arrayOfSubsIds, setArrayOfSubsIds] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState("");
 
     useEffect(() => {
         loadProduct();
@@ -39,8 +41,16 @@ const ProductUpdate = ({match}) => {
 const loadProduct = () => {
     getProduct(slug)
     .then(p=> {
-        console.log("single product",p);
+       // console.log("single product",p);
         setValues({...values, ...p.data});
+        // load single product category subs
+        getCategorySubs(p.data.category._id)
+        .then((res) => {
+            setSubOptions(res.data);  //show default values
+        });
+        let arr = [];
+        p.data.subs.map((s) =>  arr.push(s._id));
+        setArrayOfSubsIds((prev) => arr); //req. for antd Select design to work
     })
 }
 
@@ -69,12 +79,21 @@ const loadCategories = () =>
     const handleCatagoryChange = (e) => {
         e.preventDefault();
         console.log("CLICKED CATEGORY", e.target.value);
-        setValues({ ...values, subs: [], category: e.target.value });
+        setValues({ ...values, subs: [] });
+        setSelectedCategory(e.target.value);
+
+
+
         getCategorySubs(e.target.value).then((res) => {
-          console.log("SUB OPTIONS ON CATGORY CLICK", res);
           setSubOptions(res.data);
         });
-        setShowSub(true);
+      //  setShowSub(true);
+       if(values.category._id === e.target.value)
+       {
+           loadProduct();
+       }
+        setArrayOfSubsIds([]);
+
       };
 
 
@@ -101,6 +120,9 @@ const loadCategories = () =>
                      subOptions={subOptions}
                      showSub={showSub}
                      categories ={categories}
+                     arrayOfSubsIds = {arrayOfSubsIds}
+                     setArrayOfSubsIds ={setArrayOfSubsIds}
+                     selectedCategory ={selectedCategory}
                 />
             </div>
           </div>
