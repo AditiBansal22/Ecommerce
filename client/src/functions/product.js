@@ -30,5 +30,20 @@ export const getProduct = async (slug) =>
     }
 });
 
+
+//export const getProducts = async (sort,order,limit) => 
+ //   await axios.post(`http://localhost:8000/api/products`, {sort,order,limit});
+ export const getProducts = async (sort, order, limit) =>
+  await axios.post(`http://localhost:8000/api/products`, {
+    sort,
+    order,
+    limit,
+  });
       
+
+export const getProductsCount = async () =>
+  await axios.get(`http://localhost:8000/api/products/total`);
+
+
+
   
