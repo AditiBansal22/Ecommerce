@@ -53,3 +53,24 @@ exports.read = async(req,res) =>
     return res.status(400).send("Read failed");
   }
 }
+
+
+exports.update = async(req,res) =>
+{
+  try {
+         if(req.body.title)
+         {
+           req.body.slug = slugify(req.body.title);
+         }
+         const updated = await Product.findOneAndUpdate({slug: req.params.slug}, req.body , {new:true}).exec();
+         res.json(updated);
+  }
+  catch(err)
+  {
+    console.log('Product update Error ---->',err);
+    //return res.status(400).send('Product Update failed');
+    res.status(400).json({
+      err: err.message,
+    });
+  }
+}

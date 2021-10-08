@@ -24,5 +24,11 @@ export const removeProduct = async (slug,authtoken) => await axios.delete(`http:
 export const getProduct = async (slug) =>
   await axios.get(`http://localhost:8000/api/product/${slug}`);
 
+  export const updateProduct = async (slug,product,authtoken) => await axios.put(`http://localhost:8000/api/product/${slug}`, product,{
+    headers: {
+        authtoken
+    }
+});
+
       
   

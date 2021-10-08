@@ -5,8 +5,10 @@ import {toast, toastify} from 'react-toastify';
 import {useSelector} from 'react-redux';
 import {getCategory, getCategories, getCategorySubs} from '../../../functions/category';
 import CategoryForm from '../../../components/forms/CategoryForms';
-import { getProduct } from "../../../functions/product";
+import { getProduct, updateProduct } from "../../../functions/product";
 import ProductUpdateForm from "../../../components/forms/ProductUpdateForm";
+import FileUpload from "../../../components/forms/FileUpload";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const initialState = {
     title: "",
@@ -23,8 +25,8 @@ const initialState = {
     brand: "",
   };
 
-const ProductUpdate = ({match}) => {
-    //const [loading, setLoading] = useState(false);
+const ProductUpdate = ({match,history}) => {
+    const [loading, setLoading] = useState(false);
     const {user} = useSelector((state) => ({...state}));
     const {slug} = match.params;
     const [values,setValues] = useState(initialState);
@@ -59,21 +61,20 @@ const loadCategories = () =>
 
     const handleSubmit = (e) => {
          e.preventDefault();
-        //  setLoading(true);
-        //  console.log(name);
-        //  createCategory({ name }, user.token)
-        //  .then(async(res) => {
-        //    // console.log(res)
-        //    setLoading(false);
-        //    setName("");
-        //    toast.success(`"${res.data.name}" is created`);
-        //    await loadCategories();
-        //  })
-        //  .catch((err) => {
-        //    console.log(err.response);
-        //    setLoading(false);
-        //    if (err.status === 400) toast.error(err.response);
-        //  });
+          setLoading(true);
+         values.subs = arrayOfSubsIds;
+         values.category = selectedCategory ? selectedCategory : values.category;
+         updateProduct(slug, values, user.token)
+         .then((res) => {
+            setLoading(false);;
+            toast.success(`"${res.data.title}" is updated.`);
+            history.push("/admin/products");
+         })
+         .catch((err) => {
+             console.log(err);
+             setLoading(false);
+             toast.error(err.response.data.err);
+         })
     };
 
     const handleCatagoryChange = (e) => {
@@ -108,9 +109,22 @@ const loadCategories = () =>
                <div className="col-md-2">
                    <AdminNav />
                </div>
-            <div className="col">
-               <h4>Product Update</h4>
-               {JSON.stringify(values)}
+            <div className="col-md-10">
+            {loading ? (
+            <LoadingOutlined className="text-danger h1" />
+          ) : (
+            <h4>Product Update</h4>
+          )}
+          <hr />
+            <div className="p-3">
+                <FileUpload
+                values={values}
+                setValues={setValues}
+                setLoading={setLoading}
+                />
+          </div>
+          <br />
+               {/* {JSON.stringify(values)} */}
                <ProductUpdateForm
                     handleSubmit={handleSubmit}
                     handleChange={handleChange}
