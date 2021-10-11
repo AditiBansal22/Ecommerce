@@ -1,14 +1,19 @@
 import axios from 'axios'
 
-export const createProduct = async (product, authtoken) => {
-        await axios.post(`http://localhost:8000/api/product`, product,{
-        headers: {
-            authtoken
-        }
-    })
-};
+// export const createProduct = async (product, authtoken) => {
+//         await axios.post(`http://localhost:8000/api/product`, product,{
+//         headers: {
+//             authtoken
+//         }
+//     })
+// };
 
-
+export const createProduct = async (product, authtoken) =>
+  await axios.post(`http://localhost:8000/api/product/`, product, {
+    headers: {
+      authtoken,
+    },
+  });
 
 export const getProductsByCount = async (count) =>
   await axios.get(`http://localhost:8000/api/products/${count}`);
@@ -33,11 +38,11 @@ export const getProduct = async (slug) =>
 
 //export const getProducts = async (sort,order,limit) => 
  //   await axios.post(`http://localhost:8000/api/products`, {sort,order,limit});
- export const getProducts = async (sort, order, limit) =>
+ export const getProducts = async (sort, order, page) =>
   await axios.post(`http://localhost:8000/api/products`, {
     sort,
     order,
-    limit,
+    page,
   });
       
 
