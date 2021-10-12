@@ -10,12 +10,17 @@ const ProductCard = ({product}) => {
     const {title, description,images,slug} = product;
     return (
         <Card cover = {
-        <img src={images && images.length ? images[0].url : laptop } style={{height: '150px', objectFit:"Cover"}} className="p-1"/>
+        <img src={images && images.length ? images[0].url : laptop } style={{height: '150px', objectFit:"Cover"}} className="p-1" alt="image1"/>
         }
-        actions ={[<Link to ={`/product/${slug}`}><EyeOutlined className="text-danger"/><br/>View Product</Link>,
-        <>
-            <ShoppingCartOutlined className="text-danger" /> <br />Add to Cart
-        </>    ]}>
+        actions={[
+            <Link to={`/product/${slug}`}>
+              <EyeOutlined className="text-warning" /> <br /> View Product
+            </Link>,
+            <>
+              <ShoppingCartOutlined className="text-danger" /> <br /> Add to Cart
+            </>,
+          ]}
+       >
         <Meta title={title} description={`${description && description.substring(0, 10)}...`}/>
         </Card>
         
