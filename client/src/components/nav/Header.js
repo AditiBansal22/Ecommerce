@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {Menu} from 'antd';
-import { AppstoreOutlined, SettingOutlined, UserOutlined,UserAddOutlined,LogoutOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, SettingOutlined, UserOutlined,UserAddOutlined,LogoutOutlined, ShopOutlined } from '@ant-design/icons';
 import {Link} from 'react-router-dom';
 import {signOut } from 'firebase/auth';
 import {auth} from '../../firebase';
 import {useDispatch,useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
+import Search from '../forms/Search';
 
 const { SubMenu } = Menu;
 
@@ -32,6 +33,10 @@ const Header = () => {
         <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
         <Menu.Item key="home" icon={<AppstoreOutlined />} >
           <Link to="/">Home </Link>
+        </Menu.Item>
+
+        <Menu.Item key="shop" icon = {<ShopOutlined />} >
+          <Link to="/shop">Shop </Link>
         </Menu.Item>
         {/* <Menu.Item key="login"  icon={<UserOutlined />}  className = "float-right" >
             <Link to="/login">Login</Link>
@@ -66,6 +71,10 @@ const Header = () => {
           </SubMenu>
            )
          }
+
+<span className="float-right p-1">
+        <Search />
+      </span>
        
       </Menu>
     )

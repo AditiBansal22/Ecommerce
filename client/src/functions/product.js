@@ -50,5 +50,9 @@ export const getProductsCount = async () =>
   await axios.get(`http://localhost:8000/api/products/total`);
 
 
+  export const fetchProductsByFilter = async (arg) =>
+  await axios.post(`http://localhost:8000/api/search/filters`,arg);
+
+
 
   

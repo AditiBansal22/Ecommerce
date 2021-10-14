@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 const {Meta} = Card;
 
 const ProductCard = ({product}) => {
-    const {title, description,images,slug} = product;
+    const {title, description,images,slug,price} = product;
     return (
         <Card cover = {
         <img src={images && images.length ? images[0].url : laptop } style={{height: '150px', objectFit:"Cover"}} className="p-1" alt="image1"/>
@@ -21,7 +21,7 @@ const ProductCard = ({product}) => {
             </>,
           ]}
        >
-        <Meta title={title} description={`${description && description.substring(0, 10)}...`}/>
+        <Meta title={`${title} - $${price}`} description={`${description && description.substring(0, 10)}...`}/>
         </Card>
         
     )
