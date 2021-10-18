@@ -164,8 +164,66 @@ const handleCategory = async(req,res,category) => {
   }
  }
 
+
+ const handleSub = async(req,res,sub) => {
+  try {
+   let products =  await Product.find({
+     subs: sub
+   }).populate('category',"_id name")
+   .populate('subs',"_id name")
+   .exec();
+   res.json(products);
+  }
+  catch(err){
+    console.log(err);
+  }
+ }
+
+ const handleShipping = async(req,res,shipping) => {
+  try {
+    console.log("controller shipping --->" + shipping);
+   let products =  await Product.find({
+         shipping
+   }).populate('category',"_id name")
+   .populate('subs',"_id name")
+   .exec();
+   res.json(products);
+  }
+  catch(err){
+    console.log(err);
+  }
+ }
+
+ const handleColor = async(req,res,color) => {
+  try {
+   let products =  await Product.find({
+     color
+   }).populate('category',"_id name")
+   .populate('subs',"_id name")
+   .exec();
+   res.json(products);
+  }
+  catch(err){
+    console.log(err);
+  }
+ }
+
+ const handleBrand = async(req,res,brand) => {
+  try {
+   let products =  await Product.find({
+     brand
+   }).populate('category',"_id name")
+   .populate('subs',"_id name")
+   .exec();
+   res.json(products);
+  }
+  catch(err){
+    console.log(err);
+  }
+ }
+
 exports.searchFilters = async(req,res) => {
-  const {query, price, category} = req.body;
+  const {query, price, category, sub, shipping, color, brand} = req.body;
   if(query)
   {
     await handleQuery(req,res,query);
@@ -180,7 +238,31 @@ exports.searchFilters = async(req,res) => {
 
   if(category)
   {
-    console.log("category -->",category);
+    //console.log("category -->",category);
     await handleCategory(req,res,category);
+  }
+
+  if(sub)
+  {
+   // console.log("subcategory -->",sub);
+    await handleSub(req,res,sub);
+  }
+
+  if(shipping)
+  {
+    console.log("shipping -->",shipping);
+    await handleShipping(req,res,shipping);
+  }
+
+  if(color)
+  {
+    console.log("color -->",color);
+    await handleColor(req,res,color);
+  }
+
+  if(brand)
+  {
+    //console.log("shipping -->",shipping);
+    await handleBrand(req,res,brand);
   }
 }
